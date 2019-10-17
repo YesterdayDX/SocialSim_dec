@@ -4,40 +4,7 @@ from random import choice
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-# N_PRE = 3
-
 WEIGHT = [0.25, 0.25, 0.25, 0.25]
-# PLATFORM = 'Reddit'
-# TOPIC = 'Cyber'
-
-# PATH_SCORE1 = '../results/score_1.csv'
-# PATH_SCORE2 = '../results/'+PLATFORM+'/'+TOPIC+'/score.csv'
-
-# if TOPIC == 'Crypto':
-# 	N_ROOT = 3000
-# 	N_COMM = 5000
-# 	ratio_act = 0.765
-# 	ratio_del = 0.079
-# 	K = 50
-# elif TOPIC == 'Cve':
-# 	N_ROOT = 500
-# 	N_COMM = 3000
-# 	ratio_act = 0.531
-# 	ratio_del = 0.082
-# 	K = 10
-# elif TOPIC == 'Cyber':
-# 	N_ROOT = 5000
-# 	N_COMM = 20000
-# 	ratio_act = 0.535
-# 	ratio_del = 0.064
-# 	K = 200
-
-# GRDTRU = '../data/cascade/'+PLATFORM+'/cascade_'+TOPIC+'_2017-08-01---2017-08-14.txt'
-# INIT = '../data/cascade/'+PLATFORM+'/cascade_'+TOPIC+'_2017-01-01---2017-08-31.txt'
-
-# ratio_act = 0.760
-# ratio_del = 0.075
-
 
 class embedding_evaluator:
 	def __init__(self, n_pre, k, path_score, N_ROOT, N_COMM, weight=WEIGHT):
@@ -191,8 +158,8 @@ class embedding_evaluator:
 			for ID in post[1:]:
 				dist_ini[self.user_to_num_col.get(ID, 0)] += 1
 
-		np.savetxt('./results/'+PLATFORM+'/'+TOPIC+'/dist_ini.csv', dist_ini)
-		np.savetxt('./results/'+PLATFORM+'/'+TOPIC+'/dist_tru.csv', dist_tru)
+		# np.savetxt('./results/'+PLATFORM+'/'+TOPIC+'/dist_ini.csv', dist_ini)
+		# np.savetxt('./results/'+PLATFORM+'/'+TOPIC+'/dist_tru.csv', dist_tru)
 
 		print '  - Max ini: %d, arg: %d' %(max(dist_ini), np.argmax(dist_ini))
 		print '  - Max tru: %d, arg: %d' %(max(dist_tru), np.argmax(dist_tru))
@@ -219,7 +186,7 @@ class embedding_evaluator:
 		# print 'Ground Truth: '+GRDTRU
 		self.load_ground_truth(GRDTRU, TEST)
 		cas_gen = []
-		for post in self.cas_tru:
+		for post in self.cas_ini:
 			rootID = post[0]
 			_, post_gen = self.generate_post(rootID, len(post), ratio_act, ratio_del)
 			cas_gen.append(post_gen)
@@ -228,7 +195,7 @@ class embedding_evaluator:
 		dist_tru = [0 for i in xrange(self.n_comm)]
 		dist_gen = [0 for i in xrange(self.n_comm)]
 
-		for post in self.cas_tru:
+		for post in self.cas_ini:
 			for ID in post[1:]:
 				dist_tru[self.user_to_num_col.get(ID, 0)] += 1
 		for post in cas_gen:
@@ -240,8 +207,8 @@ class embedding_evaluator:
 				else:
 					dist_gen[self.user_to_num_col[ID]] += 1
 
-		np.savetxt('./results/'+PLATFORM+'/'+TOPIC+'/dist_gen.csv', dist_gen)
-		np.savetxt('./results/'+PLATFORM+'/'+TOPIC+'/dist_tru.csv', dist_tru)
+		# np.savetxt('./results/'+PLATFORM+'/'+TOPIC+'/dist_gen.csv', dist_gen)
+		# np.savetxt('./results/'+PLATFORM+'/'+TOPIC+'/dist_tru.csv', dist_tru)
 
 		print '  - Max gen: %d, arg: %d' %(max(dist_gen), np.argmax(dist_gen))
 		print '  - Max tru: %d, arg: %d' %(max(dist_tru), np.argmax(dist_tru))

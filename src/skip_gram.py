@@ -117,7 +117,7 @@ class skip_gram:
           if step>0:
             avg_loss /= 2000
             avg_loss_list.append(avg_loss)
-          # print("Average loss at step ", step, ": ", avg_loss)
+          print("Average loss at step ", step, ": ", avg_loss)
           avg_loss = 0
 
           if step % 10000 == 0:
@@ -239,7 +239,7 @@ class skip_gram:
     count_comm.extend(collections.Counter(user_list_comm).most_common(self.comm_size - 1))
     count_root = [['UNK_ROOT', -1], ['userID-none', num_none]]
     count_root.extend(collections.Counter(user_list_root).most_common(self.root_size - 2))
-
+    
     count = count_root
     count.extend(count_comm)
 
@@ -276,6 +276,7 @@ class skip_gram:
     count[0][1] = unk_root
     count[1][1] = num_none
     count[self.root_size][1] = unk_comm
+
 
     user_root_unactive = []
     user_comm_unactive = []
