@@ -1,2 +1,5 @@
 # SocialSim_dec_challenge
-DARPA Project SocialSim Dec Cahllenge
+DARPA Project SocialSim December Cahllenge
+
+Setup
+  jj
